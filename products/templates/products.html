@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    {% for product in products %}
+    
+    <div class="ccol-xs-4 col-xs-offset-1 col-sm-6 col-md-4 display panel panel-default">
+        <div class="panel-body">
+            
+        <div class="row">
+              <div class="col-xs-12 col-sm-6 col-md-12">
+                  <div class="product" style="background.image: url('{{ MEDIA_URL }}{{ product.product_image }} ')"></div>
+                  <h3>{{ product.product_name }}</h3>
+                  <p class="product-description">{{ product.product_description }}</p>
+                  <p class="product-history">{{ product.product_history }}</p>
+                  <p class="product-price">{{ product.product_price }}</p>
+                  
+                  <form method="POST" action="{% url 'add_to_basket' product.id %}">
+                    {% csrf_token %}
+                        <div class="input-group">
+                            <input name="quantity" type="number" min="1" max="999" class="form-control" placeholder="1">
+                            <span class="input=group-btn">
+                                <button class="btn btn-success" type="submit">Add</button>
+                            </span>
+                        </div>
+                 </form>
+              </div>
+        </div>
+      </div>
+    </div>
+    
+    {% endfor %}
+</div>
+
+{% endblock %}
