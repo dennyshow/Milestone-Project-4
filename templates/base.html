@@ -1,0 +1,109 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Auction</title>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}">Auction</a>
+    </div>
+
+    
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'index'%}">Home</a></li>
+            <li><a href="/">About</a></li>
+            <li><a href="/">Products</a></li>
+            
+        {% if user.is_authenticated %}
+            <li class=""><a href="/">Bids</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <form action="{% url 'search' %}" method="GET" class="navbar-form navbar-left"><div class="form-group"><input  type="text" class="form-control" name="q"></div>
+                 <button type="search" class="btn btn-default">Search</button>
+            </form>
+            <li>
+                <a href="{% url 'view_basket' %}"><i class="fa fa-shipping-cart"></i> Basket
+                   {% if product_count > 0 %}<label class="badge badge-warning">{{ product_count }}</label>{% endif %}
+                </a>
+            </li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+            
+        {% else %}
+             
+             <ul class="nav navbar-nav navbar-right">
+                <form action="{% url 'search' %}" method="GET" class="navbar-form navbar-left"><div class="form-group"><input  type="text" class="form-control" name="q"></div>
+                    <button type="search" class="btn btn-default">Search</button>
+                </form>
+                <li><a href="{% url 'login' %}">Sign In</a></li>
+                <li><a href="{% url 'registration' %}">Sign Up</a></li>
+             </ul>
+                   
+        {% endif %}
+        
+     </ul>
+    </div>
+  </div>
+</nav>
+
+
+   {% if messages %}
+       <div class="alert alert-success">
+           <div class="messages">
+               {% for message in messages %}
+                   {{ message }}
+                {% endfor %}
+           </div>
+       </div>
+    {% endif %}
+    
+    <div class="container">
+        
+  
+        {% block content %}
+        <div class="row">
+             <div class="col-xs-12 col-sm-6 col-md-12">
+                <h1> Welcome to Auctioneer</h1>
+             </div>
+        <div class="row">
+            <div class=" col-md-12 blocks" styles="background-color: red, display:flex">
+                <div class="block" styles="background-color: grey, flex:1">
+                    
+                </div>
+            </div>
+            
+        </div>
+             
+        </div>
+        {% endblock %}
+        
+    </div>
+
+<footer>
+    <div class="container">
+        <p>Made by Dehinde Shogbanmu</p>
+    </div>
+</footer>
+
+</body>
+</html>
